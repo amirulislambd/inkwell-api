@@ -5,6 +5,7 @@ import authHeder, { userRole } from "../../middlewares/auth";
 
 const router = express.Router();
 
+router.get("/author/:authorId", CommentController.getCommentByAuthorId);
 router.get("/:commentId",
   CommentController.getCommentById
 )
