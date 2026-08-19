@@ -21,5 +21,10 @@ router.delete(
   authHeder(userRole.USER, userRole.ADMIN),
   CommentController.deleteComment,
 );
+router.patch(
+  "/:commentId",
+  authHeder(userRole.USER, userRole.ADMIN),
+  CommentController.updateComment,
+);
 
 export const commentRouter: Router = router;
