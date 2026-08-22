@@ -3,9 +3,22 @@ import { PostController } from "./post.controller";
 import authHeder, { userRole } from "../../middlewares/auth";
 const router = express.Router();
 
-router.post("/", authHeder(userRole.USER), PostController.createPost);
+router.post(
+  "/",
+  authHeder(userRole.USER, userRole.ADMIN),
+  PostController.createPost,
+);
+router.get(
+  "/my-posts",
+  authHeder(userRole.USER, userRole.ADMIN),
+  PostController.getMyPosts,
+);
 
-router.get("/", PostController.getAllPost);
+router.patch(
+  "/:postId",
+  authHeder(userRole.USER, userRole.ADMIN),
+  PostController.updatePost,
+);
 
 router.get("/:postId", PostController.getPostById);
 

@@ -3,8 +3,9 @@ import express from "express";
 import cors from "cors";
 import { postRouter } from "./modules/post/post.router";
 import { toNodeHandler } from "better-auth/node";
-import { auth } from "./lib/auth";
+
 import { commentRouter } from "./modules/comments/comment.router";
+import { auth } from "./lib/auth";
 const app = express();
 
 app.use(express.json());
