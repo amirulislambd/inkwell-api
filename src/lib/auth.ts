@@ -2,6 +2,10 @@ import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
 
+const requireEmailVerification =
+  process.env.NODE_ENV === "production" ||
+  process.env.REQUIRE_EMAIL_VERIFICATION === "true";
+
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: "postgresql",
@@ -28,6 +32,6 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
-    requireEmailVerification: true,
+    requireEmailVerification,
   },
 });

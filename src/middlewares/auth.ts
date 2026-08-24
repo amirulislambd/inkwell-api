@@ -1,6 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { auth } from "../lib/auth";
 
+const requireEmailVerification =
+  process.env.NODE_ENV === "production" ||
+  process.env.REQUIRE_EMAIL_VERIFICATION === "true";
 
 declare global {
   namespace Express {
@@ -35,7 +38,7 @@ const authHeder = (...roles: userRole[]) => {
         });
       }
 
-      if (!session.user.emailVerified) {
+      if (requireEmailVerification && !session.user.emailVerified) {
         return res.status(403).json({
           success: false,
           message: "Email Verification required, Please verify your email!",
@@ -46,7 +49,10 @@ const authHeder = (...roles: userRole[]) => {
         id: session.user.id,
         email: session.user.email,
         name: session.user.name,
-        role: session.user.role ?? undefined,
+        role:
+          typeof session.user.role === "string"
+            ? session.user.role.toUpperCase()
+            : undefined,
         emailVerification: session.user.emailVerified,
       };
       req.user = authenticatedUser;

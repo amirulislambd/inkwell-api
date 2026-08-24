@@ -3,6 +3,8 @@ import { PostController } from "./post.controller";
 import authHeder, { userRole } from "../../middlewares/auth";
 const router = express.Router();
 
+router.get("/", PostController.getAllPost);
+
 router.post(
   "/",
   authHeder(userRole.USER, userRole.ADMIN),
@@ -18,6 +20,11 @@ router.patch(
   "/:postId",
   authHeder(userRole.USER, userRole.ADMIN),
   PostController.updatePost,
+);
+router.delete(
+  "/:postId",
+  authHeder(userRole.USER, userRole.ADMIN),
+  PostController.deletePost,
 );
 
 router.get("/:postId", PostController.getPostById);
