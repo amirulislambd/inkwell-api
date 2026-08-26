@@ -15,6 +15,7 @@ router.get(
   authHeder(userRole.USER, userRole.ADMIN),
   PostController.getMyPosts,
 );
+router.get("/stats", authHeder(userRole.ADMIN), PostController.getStats);
 
 router.patch(
   "/:postId",
